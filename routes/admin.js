@@ -1,14 +1,16 @@
-const path = require('path');
-
 const express = require('express');
 
-const productsController = require('../controllers/products');
+const adminController = require('../controllers/admin');
 
 const router = express.Router();
 
-router.get('/add-product', productsController.getAddProduct);
+router.get('/add-product', adminController.getAddProduct);
 
-router.post('/add-product', productsController.postAddProduct);
+router.get('/products', adminController.getProducts);
+
+router.post('/add-product', adminController.postAddProduct);
+
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
 // app.use((req,res,next) => {//allows to add middleware function
 //     console.log('In the Middleware');
@@ -19,5 +21,9 @@ router.post('/add-product', productsController.postAddProduct);
 //     console.log('This always runs');
 //     next();
 // });
+
+router.post('/edit-product', adminController.postEditProduct);
+
+router.post('/delete-product', adminController.postDeleteProduct);
 
 module.exports = router;

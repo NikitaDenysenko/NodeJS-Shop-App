@@ -4,7 +4,7 @@ exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
         pageTitle: 'Add Product',
         path: '/admin/add-product',
-        editing: false
+        editing: false,
     });
 };
 
@@ -18,7 +18,7 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description,
         imageUrl: imageUrl,
-        userId: req.user._id
+        userId: req.user
     });
     product
         .save()
@@ -46,7 +46,7 @@ exports.getEditProduct = (req, res, next) => {
                 pageTitle: 'Add Product',
                 path: '/admin/edit-product',
                 editing: editMode,
-                product: product
+                product: product,
             });
         })
         .catch(err => {
@@ -63,6 +63,7 @@ exports.postEditProduct = (req, res, next) => {
 
     Product.findById(prodId)
         .then(product => {
+            product.userId = prodId;
             product.title = updatedTitle;
             product.price = updatedPrice;
             product.imageUrl = updatedImageUrl;
@@ -83,7 +84,7 @@ exports.getProducts = (req, res, next) => {
             res.render('admin/products', {
                 prods: products,
                 pageTitle: 'Admin Products',
-                path: '/admin/products'
+                path: '/admin/products',
             });
         })
         .catch(err => {
